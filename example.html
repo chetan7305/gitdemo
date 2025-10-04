@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Example HTML — Downloadable</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; max-width:720px; margin:3rem auto; padding:1rem; line-height:1.6; }
+    header { display:flex; gap:1rem; align-items:center; }
+    pre { background:#f5f5f7; padding:1rem; border-radius:8px; overflow:auto; }
+    button { padding:.6rem 1rem; border-radius:8px; border:1px solid #ccc; background:white; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Download this HTML file</h1>
+  </header>
+
+  <p>This is a simple example HTML file. Click the button below to download a copy of this page as <code>example-download.html</code>.</p>
+
+  <button id="dl">Download HTML file</button>
+
+  <h2>Small demo content</h2>
+  <p>Current date/time (browser): <span id="now"></span></p>
+
+  <pre id="source">
+<!-- The file will download with the same HTML content you see here. -->
+  </pre>
+
+  <script>
+    // fill demo time
+    document.getElementById('now').textContent = new Date().toString();
+
+    // show source inside PRE (escaped)
+    const src = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Example HTML — Downloadable</title>
+</head>
+<body>
+  <h1>Downloaded copy</h1>
+  <p>This file was downloaded using a "Download" button that saves the page as HTML.</p>
+  <p>Downloaded at: ${new Date().toString()}</p>
+</body>
+</html>`;
+    document.getElementById('source').textContent = src;
+
+    // Download the HTML as a file when button clicked
+    document.getElementById('dl').addEventListener('click', () => {
+      const filename = 'example-download.html';
+      const blob = new Blob([src], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
