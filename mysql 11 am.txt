@@ -1,0 +1,258 @@
+MySQL
+My developer daughter:
+SQl: Structured Query Language
+       To maintain data/store data into DB.
+
+id   name
+10   xyz
+
+
+3 components:
+
+data ---- table ----database/schema
+
+Data:
+It contain raw info.
+
+Table:
+Can store data  into tabular format  (rows,columns)
+
+Database/Schema:
+used to store all those tables into ur database.
+
+
+
+Common  commands:
+
+DDL:  data definition lang
+DML:  data manipulation lang
+DCL:  data control lang
+DQL:  data query lang
+TCL:  Transaction control lang
+
+
+
+
+
+DDL:
+create,drop,alter,truncate,rename
+
+DML:
+insert,update ,delete
+
+DCl:
+grant,revoke
+
+DQl:
+select
+
+TCl:
+savepoint,rollback,commit
+
+
+
+To create database:
+syntax:
+create database database_name;
+
+
+To select database for further operations:
+use database_name;
+
+
+To create table:
+
+create table table_name(column_name datatype..)
+
+To insert values according to column wise
+insert into table_name(columns_names)values()
+
+To insert single values:
+insert into table_name values()
+
+To insert multiple values:
+insert into table_name values(),(),()...
+
+----------------------------------------------------------------------
+
+Select command:
+
+
+select * from table_name;
+
+select name,salary from employee;
+select name ,salary from employee where id=1;
+
+
+-----------------------------------------------------------
+like command:
+wildcard command/operators:
+
+1)_
+2)%
+
+starting with--- 's%';
+ending with---   '%a';
+in between--- '%sh%';
+2nd position--- '___r%';
+
+
+select * from employee where name like 'S%';---starts with s
+
+--------------------------------------
+
+Constraints:
+
+To avoid duplication in ur records.
+
+1)Primary key
+2)foreign key
+3)Not null
+4)Null
+5)default
+6)check
+7)Auto_increment
+
+
+1)primary:
+unique values.
+not repeatable
+Not null
+
+rule:
+1 table 1 primary key
+multiple columns ---(1 pk)
+
+
+ create table students(id int primary key auto_increment,name varchar(20) not null,city varchar(20) default('pune'),marks int,check(marks>50));
+
+
+ insert into students(id,name,city,marks)values(1,'asha','punjab',78);
+
+
+ insert into students(name,marks)values('Akash',55),('vaibhavi',88),('deepak',56),('joshna',75),('yash',87);
+
+----------------------------------------------------------------------------
+
+Update:
+Used to update ur records into the table.
+
+1)update all records:
+syntax:
+----update student set city='pune';
+
+
+2)update specific record:
+syntax:
+----update student set name='Ankit' where id=1;
+
+3)Multiple record with multiple values:
+
+
+update student set
+city=case
+when id=1 then 'solapur'
+when id=2 then 'Kolhapur'
+when id=3 then 'Nagpur'
+end
+where id in(1,2,3);
+
+
+
+------------------------------------------------------
+1)update student set city='pune';
+
+
+2)update student set name='Ankit' where id=1;
+
+
+3)update student set
+city=case
+when id=1 then 'solapur'
+when id=2 then 'Kolhapur'
+when id=3 then 'Nagpur'
+end
+where id in(1,2,3);
+
+--------------------------------------------------------
+Describe command:
+--used  to view structure of the table
+
+desc table_name;
+describe table_name;
+------------------------------------------------
+
+Alter command:
+
+1)add column
+2)drop column
+3)modify--(can change datatype)
+4)rename
+
+
+alter table students add column age int;
+
+
+alter table students add column clg_name varchar(20) after age;
+
+
+alter table students add column clg_name varchar(20) first;
+
+
+--------------------------------------------------------------------
+
+Drop:
+alter table students drop column age;
+
+Modify:
+alter table students modify column name varchar(45);
+
+Rename:
+
+alter table students rename column id to sr.no;
+
+
+----------------------------------------------------------------
+Aggregate functions:
+
+1)Sum()---return total of all the records
+2)Avg()---return avg
+3)min()--min value
+4)max()--max value
+5)count()--no of values---does not count null values
+6)count(*)------it does count null values also
+
+
+--------------------------------------------------------------
+
+select sum(marks) from student;
+select avg(marks) from student;
+select min(marks) from student
+select max(marks) from student;
+select count(marks) from student;
+select count(*) from student;
+
+
+clauses:
+
+where clause
+order by clause
+group by clause
+having clause
+
+-----------------
+order by clause:
+used for sorting data into the table
+--->asc/dec
+
+select * from student
+order by name asc;
+
+--------------------------------------
+
+distinct:
+used for avoiding duplications.
+select distinct(city) from student_details;
+
+
+
