@@ -1,0 +1,395 @@
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.43 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| c1                 |
+| chetan             |
+| information_schema |
+| karan              |
+| mysql              |
+| performance_schema |
+| sys                |
+| user               |
++--------------------+
+8 rows in set (0.01 sec)
+
+mysql> use c1;
+Database changed
+mysql> show tables;
++--------------+
+| Tables_in_c1 |
++--------------+
+| emp          |
+| karan        |
+| student      |
++--------------+
+3 rows in set (0.01 sec)
+
+mysql> select * from eemp;
+ERROR 1146 (42S02): Table 'c1.eemp' doesn't exist
+mysql> select * from emp;
++------+--------+--------+-------------+
+| id   | Name   | salary | city        |
++------+--------+--------+-------------+
+|    1 | chetan | 500000 | pune        |
+|    1 | karan  | 400000 | nasik       |
+|    3 | ankush |  20000 | koyal       |
+|    4 | sahil  |  30000 | nagar       |
+|    5 | viki   |  60000 | Ahilyanagar |
++------+--------+--------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> upadate emp salary= 5000 where id=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'upadate emp salary= 5000 where id=1' at line 1
+mysql> select city from student where id=1;
+ERROR 1054 (42S22): Unknown column 'city' in 'field list'
+mysql> select city from emp where id=1;
++-------+
+| city  |
++-------+
+| pune  |
+| nasik |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> select city from emp where id=3;
++-------+
+| city  |
++-------+
+| koyal |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp where name like 'c%';
++------+--------+--------+------+
+| id   | Name   | salary | city |
++------+--------+--------+------+
+|    1 | chetan | 500000 | pune |
++------+--------+--------+------+
+1 row in set (0.01 sec)
+
+mysql> select * from emp where name like '%';
++------+--------+--------+-------------+
+| id   | Name   | salary | city        |
++------+--------+--------+-------------+
+|    1 | chetan | 500000 | pune        |
+|    1 | karan  | 400000 | nasik       |
+|    3 | ankush |  20000 | koyal       |
+|    4 | sahil  |  30000 | nagar       |
+|    5 | viki   |  60000 | Ahilyanagar |
++------+--------+--------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp where name like '%h';
++------+--------+--------+-------+
+| id   | Name   | salary | city  |
++------+--------+--------+-------+
+|    3 | ankush |  20000 | koyal |
++------+--------+--------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp where name like '%et%';
++------+--------+--------+------+
+| id   | Name   | salary | city |
++------+--------+--------+------+
+|    1 | chetan | 500000 | pune |
++------+--------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp where name like '%ta%';
++------+--------+--------+------+
+| id   | Name   | salary | city |
++------+--------+--------+------+
+|    1 | chetan | 500000 | pune |
++------+--------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> select id=1  from emp where name like '%t';
+Empty set (0.00 sec)
+
+mysql> select id=1  from emp where name like '__h%';
++------+
+| id=1 |
++------+
+|    0 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp where name like '__h%';
++------+-------+--------+-------+
+| id   | Name  | salary | city  |
++------+-------+--------+-------+
+|    4 | sahil |  30000 | nagar |
++------+-------+--------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp where name like '____u%';
+Empty set (0.00 sec)
+
+mysql> create table ins('id' int,'name' varchar(40),'location' varchar(20),'course'(20),'fee' int,'duration' float);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''id' int,'name' varchar(40),'location' varchar(20),'course'(20),'fee' int,'durat' at line 1
+mysql> create table ins(id int,name varchar(40),location varchar(20),course varchar(20),fee int,duration float);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into ins (id, name, location, course,fee,duration )
+    -> values
+    ->        (1, 'karan sathe', )
+    ->
+    ->        (1, 'karan sathe', 'pune','ds',20000,6);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')
+
+       (1, 'karan sathe', 'pune','ds',20000,6)' at line 3
+mysql>        (1, 'karan sathe', 'pune','ds',20000,6);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1, 'karan sathe', 'pune','ds',20000,6)' at line 1
+mysql> insert into ins values(1,'karan sathe', 'pune','java',20000,6);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into ins values(2,'chetan sabale, shivaji nagar','python',28800,7);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into ins values(2,'chetan sabale, 'shivaji nagar','python',28800,7);
+    '> ^C
+mysql> insert into ins values(2,'chetan sabale, 'shivaji nagar','python',28800,7);
+    '> insert into ins values(2,'chetan sabale', 'shivaji nagar','python',28800,7);
+    '> ^C
+mysql> insert into ins values(2,'chetan sabale', 'shivaji nagar','python',28800,7);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into ins ( id, name, location,course,fee , duration)
+    ->  values
+    ->         (3,'ankush bankar', 'nagar','c++',29800,8),
+    ->         (4,'sanket bankar', 'bhosri','medical',99800,6.5),
+    ->         (5,'sahil shaikh', 'beed','js',9800,2);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from ins;
++------+---------------+---------------+---------+-------+----------+
+| id   | name          | location      | course  | fee   | duration |
++------+---------------+---------------+---------+-------+----------+
+|    1 | karan sathe   | pune          | java    | 20000 |        6 |
+|    2 | chetan sabale | shivaji nagar | python  | 28800 |        7 |
+|    3 | ankush bankar | nagar         | c++     | 29800 |        8 |
+|    4 | sanket bankar | bhosri        | medical | 99800 |      6.5 |
+|    5 | sahil shaikh  | beed          | js      |  9800 |        2 |
++------+---------------+---------------+---------+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from ins where name like '%s';
+Empty set (0.00 sec)
+
+mysql> select * from ins where name like '%c';
+Empty set (0.00 sec)
+
+mysql> select * from ins where name like 's';
+Empty set (0.00 sec)
+
+mysql> select * from ins where name like 's%';
++------+---------------+----------+---------+-------+----------+
+| id   | name          | location | course  | fee   | duration |
++------+---------------+----------+---------+-------+----------+
+|    4 | sanket bankar | bhosri   | medical | 99800 |      6.5 |
+|    5 | sahil shaikh  | beed     | js      |  9800 |        2 |
++------+---------------+----------+---------+-------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from ins where name like '%s%';
++------+---------------+---------------+---------+-------+----------+
+| id   | name          | location      | course  | fee   | duration |
++------+---------------+---------------+---------+-------+----------+
+|    1 | karan sathe   | pune          | java    | 20000 |        6 |
+|    2 | chetan sabale | shivaji nagar | python  | 28800 |        7 |
+|    3 | ankush bankar | nagar         | c++     | 29800 |        8 |
+|    4 | sanket bankar | bhosri        | medical | 99800 |      6.5 |
+|    5 | sahil shaikh  | beed          | js      |  9800 |        2 |
++------+---------------+---------------+---------+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from ins where name like '%__n';
+Empty set (0.00 sec)
+
+mysql> select * from ins where name like '__n%';
++------+---------------+----------+---------+-------+----------+
+| id   | name          | location | course  | fee   | duration |
++------+---------------+----------+---------+-------+----------+
+|    4 | sanket bankar | bhosri   | medical | 99800 |      6.5 |
++------+---------------+----------+---------+-------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from ins where name like '%r';
++------+---------------+----------+---------+-------+----------+
+| id   | name          | location | course  | fee   | duration |
++------+---------------+----------+---------+-------+----------+
+|    3 | ankush bankar | nagar    | c++     | 29800 |        8 |
+|    4 | sanket bankar | bhosri   | medical | 99800 |      6.5 |
++------+---------------+----------+---------+-------+----------+
+2 rows in set (0.00 sec)
+
+mysql> update ins set course='cloud ' where id= 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update ins set course='cloud ' where name ='sanket bankar';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from ins;
++------+---------------+---------------+--------+-------+----------+
+| id   | name          | location      | course | fee   | duration |
++------+---------------+---------------+--------+-------+----------+
+|    1 | karan sathe   | pune          | cloud  | 20000 |        6 |
+|    2 | chetan sabale | shivaji nagar | python | 28800 |        7 |
+|    3 | ankush bankar | nagar         | c++    | 29800 |        8 |
+|    4 | sanket bankar | bhosri        | cloud  | 99800 |      6.5 |
+|    5 | sahil shaikh  | beed          | js     |  9800 |        2 |
++------+---------------+---------------+--------+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> update ins
+    -> set name ='ankush don', location='koyal' where  id=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from insl
+    -> select * from ins;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from ins' at line 2
+mysql> select * from ins;
++------+---------------+---------------+--------+-------+----------+
+| id   | name          | location      | course | fee   | duration |
++------+---------------+---------------+--------+-------+----------+
+|    1 | karan sathe   | pune          | cloud  | 20000 |        6 |
+|    2 | chetan sabale | shivaji nagar | python | 28800 |        7 |
+|    3 | ankush don    | koyal         | c++    | 29800 |        8 |
+|    4 | sanket bankar | bhosri        | cloud  | 99800 |      6.5 |
+|    5 | sahil shaikh  | beed          | js     |  9800 |        2 |
++------+---------------+---------------+--------+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> update ins set duration=6;
+Query OK, 4 rows affected (0.01 sec)
+Rows matched: 5  Changed: 4  Warnings: 0
+
+mysql> select * from ins;
++------+---------------+---------------+--------+-------+----------+
+| id   | name          | location      | course | fee   | duration |
++------+---------------+---------------+--------+-------+----------+
+|    1 | karan sathe   | pune          | cloud  | 20000 |        6 |
+|    2 | chetan sabale | shivaji nagar | python | 28800 |        6 |
+|    3 | ankush don    | koyal         | c++    | 29800 |        6 |
+|    4 | sanket bankar | bhosri        | cloud  | 99800 |        6 |
+|    5 | sahil shaikh  | beed          | js     |  9800 |        6 |
++------+---------------+---------------+--------+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> update ins set fess=3000 where id=1;
+ERROR 1054 (42S22): Unknown column 'fess' in 'field list'
+mysql> update ins set fes=3000 where id=1;
+ERROR 1054 (42S22): Unknown column 'fes' in 'field list'
+mysql> update ins set fee=3000 where id=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update ins
+    -> set fee=case
+    -> when name='karan sathe'then 2500
+    -> when name='chetan sabale'then 2500
+    -> end
+    -> where name in ('karan sathe','chetan sabale');
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select 8 from ins;
++---+
+| 8 |
++---+
+| 8 |
+| 8 |
+| 8 |
+| 8 |
+| 8 |
++---+
+5 rows in set (0.00 sec)
+
+mysql> select * from ins;
++------+---------------+---------------+--------+-------+----------+
+| id   | name          | location      | course | fee   | duration |
++------+---------------+---------------+--------+-------+----------+
+|    1 | karan sathe   | pune          | cloud  |  2500 |        6 |
+|    2 | chetan sabale | shivaji nagar | python |  2500 |        6 |
+|    3 | ankush don    | koyal         | c++    | 29800 |        6 |
+|    4 | sanket bankar | bhosri        | cloud  | 99800 |        6 |
+|    5 | sahil shaikh  | beed          | js     |  9800 |        6 |
++------+---------------+---------------+--------+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> create table insi(id int primary key auto_increment, iname varchar(55) not null, city varchar(55) default ('pune'), salary int, check (salary>10000));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc insi;
++--------+-------------+------+-----+----------------+-------------------+
+| Field  | Type        | Null | Key | Default        | Extra             |
++--------+-------------+------+-----+----------------+-------------------+
+| id     | int         | NO   | PRI | NULL           | auto_increment    |
+| iname  | varchar(55) | NO   |     | NULL           |                   |
+| city   | varchar(55) | YES  |     | _cp850\'pune\' | DEFAULT_GENERATED |
+| salary | int         | YES  |     | NULL           |                   |
++--------+-------------+------+-----+----------------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql> inser into insi(1, 'jspm', 'pune',82000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inser into insi(1, 'jspm', 'pune',82000)' at line 1
+mysql> insert into insi(1, 'jspm', 'pune',82000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1, 'jspm', 'pune',82000)' at line 1
+mysql> insert into values insi(1, 'jspm', 'pune',82000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values insi(1, 'jspm', 'pune',82000)' at line 1
+mysql> insert into  insi values(1, 'jspm', 'pune',82000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into insi( id, name, city , salary)
+    -> values
+    -> ( 'dypatil',82000),
+    -> ('new art',75000),
+    -> ('mit',52000);
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> insert into insi( id, iname, city , salary)
+    -> values
+    -> ( 'dypatil',82000),
+    -> ('new art',75000),
+    -> ('mit',52000);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into insi(iname,salary)values('chetan',20000),('karan',3000);
+ERROR 3819 (HY000): Check constraint 'insi_chk_1' is violated.
+mysql> insert into insi(iname,salary)values('chetan',50000),('karan',8000);
+ERROR 3819 (HY000): Check constraint 'insi_chk_1' is violated.
+mysql> ^C
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
